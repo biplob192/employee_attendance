@@ -45,7 +45,6 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'phone' => ['required', Rule::unique('users')->ignore($this->route('id'))],
             'email' => ['required', 'email', Rule::unique('users')->ignore($this->route('id'))],
-            'surveyor_type'     => 'required',
         ];
     }
 }

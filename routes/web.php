@@ -46,6 +46,3 @@ Route::group(['middleware' => 'login'], function () {
         Route::get('attendance/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
     });
 });
-
-
-Route::post('test', [UserController::class, 'test'])->name('users.test');

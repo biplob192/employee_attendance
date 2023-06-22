@@ -2,92 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use RealRashid\SweetAlert\Facades\Alert;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+    public function __construct(private AuthService $authService)
+    {
+    }
+
     public function loginView()
     {
-
-        if (Auth::check()) {
-            return redirect()->route('auth.dashboard');
-        }
-
-        return view('auth.login');
+        return $this->authService->loginView();
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('auth.dashboard');
-        } else {
-            return back()->with("error", "Invalide credential");
-        }
+        return $this->authService->login($request);
     }
 
     public function registerView()
     {
-        if (Auth::check()) {
-            return redirect()->route('auth.dashboard');
-        }
-
-        return view('auth.register');
+        return $this->authService->registerView();
     }
+
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string',
-            'password' => 'required|confirmed|string|min:6',
-        ]);
-
-        $user = User::create([
-            'name'      => $request->name,
-            'email'     => $request->email,
-            'phone'     => $request->phone,
-            'password'  => Hash::make($request->password),
-        ]);
-
-        // Assign role for the user
-        $user->assignRole('employee');
-
-        // Set employee details for the user
-        $employee = new Employee();
-        $employee->user_id = $user->id;
-        $employee->save();
-
-        Alert::success('Congrate', 'Registration successfull!');
-        Auth::login($user);
-        return redirect()->route('auth.dashboard');
+        return $this->authService->register($request);
     }
 
     public function dashboard()
     {
-        if (Auth::check()) {
-            return view('dashboard');
-        }
-        return redirect()->route('auth.login_view');
+        return $this->authService->dashboard();
     }
 
     public function home()
     {
-        if (Auth::check()) {
-            return redirect()->route('auth.dashboard');
-        }
-        return view('auth.login');
+        return $this->authService->home();
     }
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('auth.home');
+        return $this->authService->logout();
     }
 }

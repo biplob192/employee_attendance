@@ -5,6 +5,6 @@
         Version 2.0
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2014-2021 <a href="#">RETINA SOFT</a>.</strong> All rights
+    <strong>Copyright &copy; 2014-2021 <a href="#">MY COMPANY</a>.</strong> All rights
     reserved.
 </footer>

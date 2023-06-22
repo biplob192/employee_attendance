@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Retina Sift | Login</title>
+    <title>My Soft | Login</title>
 
     @include('include.master_style')
     <!-- icheck bootstrap -->
